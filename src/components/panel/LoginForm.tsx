@@ -3,6 +3,7 @@
 import { useActionState } from 'react';
 import { loginAction } from '@/app/panel/actions';
 import { FormAlert, SubmitButton } from '@/components/ui/Bits';
+import { PasswordInput } from '@/components/ui/PasswordInput';
 import type { ActionState } from '@/lib/errors';
 
 const INITIAL: ActionState = {};
@@ -18,7 +19,7 @@ export function LoginForm() {
       </div>
       <div className="field">
         <label htmlFor="password">Contraseña</label>
-        <input id="password" name="password" className="input" type="password" autoComplete="current-password" maxLength={200} required />
+        <PasswordInput id="password" name="password" autoComplete="current-password" maxLength={200} required />
       </div>
       <SubmitButton className="btn btn--primary btn--lg btn--block" pendingLabel="Entrando…">Entrar</SubmitButton>
     </form>

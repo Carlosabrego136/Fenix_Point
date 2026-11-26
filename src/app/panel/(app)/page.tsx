@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import { AutoRefresh } from '@/components/ui/Bits';
 import { Icon } from '@/components/Icon';
+import { SearchBox } from '@/components/panel/SearchBox';
 import { Empty, EnvioTabs, Flash } from '@/components/panel/Shared';
 import { requirePageUser } from '@/lib/auth';
 import { listEnvios, summarize, tabCounts, type Envio, type EnvioSummary, type TabCounts } from '@/lib/envios';
@@ -63,7 +64,7 @@ export default async function WaitingPage({ searchParams }: { searchParams: Prom
       </div>
 
       <form className="searchbar" action="/panel" role="search">
-        <input className="input" type="search" name="q" defaultValue={q} placeholder="Escriba el código de 4 dígitos o un nombre…" aria-label="Buscar envío en espera" maxLength={80} autoComplete="off" inputMode="search" autoFocus />
+        <SearchBox defaultValue={q} />
         <button type="submit" className="btn btn--primary"><Icon name="search" size={18} /> Buscar</button>
         {q && <Link className="btn btn--ghost" href="/panel">Ver todos</Link>}
       </form>

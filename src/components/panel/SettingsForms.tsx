@@ -3,6 +3,7 @@
 import { useActionState, useEffect, useRef } from 'react';
 import { changePasswordAction, resetOperatorPasswordAction, saveBranchAction, saveSettingsAction, saveSizeAction } from '@/app/panel/actions';
 import { FieldError, FormAlert, SubmitButton } from '@/components/ui/Bits';
+import { PasswordInput } from '@/components/ui/PasswordInput';
 import type { ActionState } from '@/lib/errors';
 import type { Branch, Size } from '@/lib/catalog';
 import type { Settings } from '@/lib/settings';
@@ -128,18 +129,18 @@ export function ChangePasswordForm() {
       <FormAlert state={state} />
       <div className="field">
         <label htmlFor="current">Contraseña actual</label>
-        <input id="current" name="current" className="input" type="password" autoComplete="current-password" maxLength={200} aria-invalid={Boolean(state.fieldErrors?.current)} required />
+        <PasswordInput id="current" name="current" autoComplete="current-password" maxLength={200} aria-invalid={Boolean(state.fieldErrors?.current)} required />
         <FieldError state={state} name="current" />
       </div>
       <div className="field">
         <label htmlFor="next">Contraseña nueva</label>
-        <input id="next" name="next" className="input" type="password" autoComplete="new-password" maxLength={128} aria-invalid={Boolean(state.fieldErrors?.next)} required />
+        <PasswordInput id="next" name="next" autoComplete="new-password" maxLength={128} aria-invalid={Boolean(state.fieldErrors?.next)} required />
         <span className="field__hint">Mínimo 8 caracteres, con letras y números.</span>
         <FieldError state={state} name="next" />
       </div>
       <div className="field">
         <label htmlFor="confirm">Repita la contraseña nueva</label>
-        <input id="confirm" name="confirm" className="input" type="password" autoComplete="new-password" maxLength={128} aria-invalid={Boolean(state.fieldErrors?.confirm)} required />
+        <PasswordInput id="confirm" name="confirm" autoComplete="new-password" maxLength={128} aria-invalid={Boolean(state.fieldErrors?.confirm)} required />
         <FieldError state={state} name="confirm" />
       </div>
       <div><SubmitButton pendingLabel="Guardando…">Cambiar mi contraseña</SubmitButton></div>
@@ -155,13 +156,13 @@ export function ResetOperatorForm({ operatorId, username }: { operatorId: number
       <FormAlert state={state} />
       <div className="field">
         <label htmlFor={`rn-${operatorId}`}>Nueva contraseña para «{username}»</label>
-        <input id={`rn-${operatorId}`} name="next" className="input" type="password" autoComplete="new-password" maxLength={128} aria-invalid={Boolean(state.fieldErrors?.next)} required />
+        <PasswordInput id={`rn-${operatorId}`} name="next" autoComplete="new-password" maxLength={128} aria-invalid={Boolean(state.fieldErrors?.next)} required />
         <span className="field__hint">Mínimo 8 caracteres, con letras y números.</span>
         <FieldError state={state} name="next" />
       </div>
       <div className="field">
         <label htmlFor={`rc-${operatorId}`}>Repita la contraseña</label>
-        <input id={`rc-${operatorId}`} name="confirm" className="input" type="password" autoComplete="new-password" maxLength={128} aria-invalid={Boolean(state.fieldErrors?.confirm)} required />
+        <PasswordInput id={`rc-${operatorId}`} name="confirm" autoComplete="new-password" maxLength={128} aria-invalid={Boolean(state.fieldErrors?.confirm)} required />
         <FieldError state={state} name="confirm" />
       </div>
       <div><SubmitButton className="btn btn--soft" pendingLabel="Guardando…" confirm={`¿Cambiar la contraseña de «${username}»? Se cerrará su sesión abierta.`}>Restablecer contraseña</SubmitButton></div>

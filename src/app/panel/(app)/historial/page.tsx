@@ -61,7 +61,7 @@ export default async function HistoryPage({ searchParams }: { searchParams: Prom
       </header>
 
       <form className="card" action="/panel/historial" style={{ display: 'grid', gap: 14, gridTemplateColumns: 'repeat(auto-fit, minmax(170px, 1fr))', alignItems: 'end' }}>
-        <div className="field" style={{ gridColumn: 'span 2' }}>
+        <div className="field span-2">
           <label htmlFor="q">Buscar</label>
           <input id="q" name="q" className="input input--sm" type="search" defaultValue={filters.q} placeholder="Folio, código, nombre o teléfono" maxLength={80} />
         </div>

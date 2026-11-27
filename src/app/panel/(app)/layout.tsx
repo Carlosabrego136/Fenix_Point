@@ -3,6 +3,7 @@ import type { ReactNode } from 'react';
 import { logoutAction } from '@/app/panel/actions';
 import { LogoutButton } from '@/components/panel/LoginForm';
 import { Nav, type NavItem } from '@/components/panel/Nav';
+import { PanelWatermark, WelcomeBar } from '@/components/panel/PanelDecor';
 import { getCurrentUser } from '@/lib/auth';
 import { tabCounts, type TabCounts } from '@/lib/envios';
 import { can, ROLE_LABEL } from '@/lib/permissions';
@@ -15,8 +16,10 @@ export default async function PanelLayout({ children }: { children: ReactNode })
   if (!user) redirect('/panel/login');
 
   let counts: TabCounts | null = null;
+  let tz = 'America/Tijuana';
   try {
-    counts = await tabCounts(await appTimezone());
+    tz = await appTimezone();
+    counts = await tabCounts(tz);
   } catch {
     counts = null;
   }
@@ -37,6 +40,7 @@ export default async function PanelLayout({ children }: { children: ReactNode })
 
   return (
     <div className="shell">
+      <PanelWatermark />
       <a className="skip-link" href="#contenido">Saltar al contenido</a>
       <aside className="side">
         <div className="side__brand">
@@ -56,6 +60,7 @@ export default async function PanelLayout({ children }: { children: ReactNode })
         </div>
       </aside>
       <main id="contenido" className="main">
+        <WelcomeBar name={user.name} tz={tz} counts={counts} />
         {children}
       </main>
     </div>

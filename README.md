@@ -21,7 +21,7 @@ Next.js 15 · TypeScript · Postgres (Aiven) · sesión por cookie firmada (JWT)
 | `DATABASE_URL` | Cadena de conexión de la base **exclusiva** `fenixpoint` |
 | `DATABASE_CA_CERT` | Certificado CA de Aiven (contenido PEM) |
 | `SESSION_SECRET` | Cadena aleatoria de 32+ caracteres |
-| `NEXT_PUBLIC_SITE_URL` | `https://fenixpoint-ayora.vercel.app` |
+| `NEXT_PUBLIC_SITE_URL` | `https://fenix-point.vercel.app` |
 
 Ver `.env.example`. **Nunca** suba `.env.local` a git.
 

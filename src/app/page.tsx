@@ -1,5 +1,6 @@
 import { randomUUID } from 'node:crypto';
 import { Icon } from '@/components/Icon';
+import { HeroVideo } from '@/components/ui/HeroVideo';
 import { PublicForm } from '@/components/PublicForm';
 import { listBranches, listSizes } from '@/lib/catalog';
 import { logger } from '@/lib/logger';
@@ -22,6 +23,7 @@ export default async function PublicPage() {
 
   return (
     <main className="pub" id="contenido">
+      <HeroVideo />
       <div className="pub__wrap">
         <header className="pub__brand">
           <img className="pub__logo" src="/marca/logo-fenix-point.jpg" alt="Fénix Point · Tu logística, en un solo punto." width={112} height={112} />

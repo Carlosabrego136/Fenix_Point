@@ -1,5 +1,6 @@
 import { redirect } from 'next/navigation';
 import { Icon } from '@/components/Icon';
+import { HeroVideo } from '@/components/ui/HeroVideo';
 import { LoginForm } from '@/components/panel/LoginForm';
 import { getCurrentUser } from '@/lib/auth';
 import { isDbConfigured } from '@/lib/db';
@@ -11,17 +12,10 @@ export default async function LoginPage() {
   if (isDbConfigured() && (await getCurrentUser())) redirect('/panel');
   return (
     <main className="login" id="contenido">
-      <div className="login__bg" aria-hidden="true">
-        <video autoPlay muted loop playsInline preload="auto" poster="/marca/login-poster.jpg" disablePictureInPicture>
-          <source src="/marca/login-bg-mobile.mp4" type="video/mp4" media="(max-width: 700px)" />
-          <source src="/marca/login-bg.mp4" type="video/mp4" />
-        </video>
-        <div className="login__shade" />
-      </div>
+      <HeroVideo />
 
       <div className="login__wrap">
         <section className="login__brand">
-          <span className="login__tag"><span className="login__dot" /> Panel de operación</span>
           <h2>Tu logística,<br /><em>en un solo punto.</em></h2>
           <p>Recepción, seguimiento y entrega de paquetes en un mismo lugar, de forma ordenada y segura.</p>
           <ul className="login__feats">

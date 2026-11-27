@@ -148,6 +148,7 @@ button, input, select, textarea { font: inherit; color: inherit; }
 
 /* ═══════════════ PÁGINA PÚBLICA (QR) ═══════════════ */
 .pub {
+  position: relative; isolation: isolate;
   min-height: 100dvh; padding: 28px 16px 40px; display: flex; flex-direction: column; align-items: center;
   color: #e9f0ff;
   background:
@@ -293,14 +294,28 @@ details.fold > summary::after { content: '+'; font-size: 20px; color: var(--mute
 details.fold[open] > summary::after { content: '–'; }
 details.fold > div { padding: 4px 18px 18px; display: grid; gap: 14px; }
 
+/* escena de fondo (video) */
+.hv { position: fixed; inset: 0; z-index: -1; overflow: hidden; background: #111 url('/marca/escena-final.jpg') center bottom / cover no-repeat; }
+.hv video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center bottom; }
+.hv--still video { display: none; }
+.hv__shade { position: absolute; inset: 0; }
+.hv__veil { position: absolute; inset: 0; background: #040b1f; opacity: 0; transition: opacity 0.9s ease; pointer-events: none; }
+.hv__veil.on { opacity: 1; }
+.login .hv__shade { mix-blend-mode: multiply; background: linear-gradient(100deg, rgba(22, 58, 158, 0.94) 0%, rgba(30, 72, 178, 0.8) 50%, rgba(44, 96, 206, 0.5) 100%); }
+.pub .hv__shade { mix-blend-mode: multiply; background: linear-gradient(180deg, rgba(14, 42, 128, 0.93), rgba(10, 28, 90, 0.96)); }
+@media (max-width: 920px) {
+  .hv { position: absolute; inset: 0 0 auto 0; height: 70vw; background-position: 40% center; }
+  .hv video { object-position: 40% center; }
+  .hv::after { content: ''; position: absolute; inset: auto 0 0 0; height: 38%; background: linear-gradient(180deg, transparent, #050f2b); }
+  .login .hv__shade, .pub .hv__shade { background: rgba(40, 92, 200, 0.55); }
+  .login .hv::after { background: linear-gradient(180deg, transparent, #040b1f); }
+}
+
 /* login */
-.login { position: relative; min-height: 100dvh; display: grid; place-items: center; padding: 24px 16px; overflow: hidden; background: #040b1f; isolation: isolate; }
-.login__bg { position: absolute; inset: 0; z-index: -1; background: #040b1f url('/marca/login-poster.jpg') center / cover no-repeat; }
-.login__bg video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
-.login__shade { position: absolute; inset: 0; background: radial-gradient(900px 520px at 85% -8%, rgba(47, 107, 255, 0.35), transparent 62%), radial-gradient(700px 480px at -5% 105%, rgba(255, 161, 61, 0.22), transparent 58%), linear-gradient(105deg, rgba(4, 11, 31, 0.9) 0%, rgba(7, 22, 52, 0.7) 48%, rgba(4, 11, 31, 0.55) 100%); }
-.login__wrap { width: 100%; max-width: 1080px; display: grid; grid-template-columns: 1.15fr 410px; gap: 56px; align-items: center; justify-content: center; }
+.login { position: relative; min-height: 100dvh; display: grid; place-items: end center; padding: 24px 16px; overflow: hidden; background: #040b1f; isolation: isolate; }
+.login__wrap { padding-bottom: clamp(12px, 3vh, 32px); padding-top: 40px; width: 100%; max-width: 1080px; display: grid; grid-template-columns: 1.15fr 410px; gap: 56px; align-items: center; justify-content: center; }
 .login__brand { color: #fff; display: grid; gap: 18px; }
-.login__tag { justify-self: start; display: inline-flex; align-items: center; gap: 8px; padding: 7px 14px; border-radius: 999px; font-size: 12px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #ffd9ac; background: rgba(255, 161, 61, 0.14); border: 1px solid rgba(255, 161, 61, 0.4); }
+.login__tag { display: none; justify-self: start; display: inline-flex; align-items: center; gap: 8px; padding: 7px 14px; border-radius: 999px; font-size: 12px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #ffd9ac; background: rgba(255, 161, 61, 0.14); border: 1px solid rgba(255, 161, 61, 0.4); }
 .login__dot { width: 8px; height: 8px; border-radius: 50%; background: var(--ember); box-shadow: 0 0 0 0 rgba(255, 161, 61, 0.7); animation: loginPulse 2s infinite; }
 @keyframes loginPulse { 70% { box-shadow: 0 0 0 9px rgba(255, 161, 61, 0); } 100% { box-shadow: 0 0 0 0 rgba(255, 161, 61, 0); } }
 .login__brand h2 { font-family: var(--font-display); font-size: clamp(34px, 4.6vw, 56px); line-height: 1.08; letter-spacing: 0.02em; text-shadow: 0 4px 30px rgba(0, 0, 0, 0.5); }
@@ -327,15 +342,14 @@ details.fold > div { padding: 4px 18px 18px; display: grid; gap: 14px; }
 .login__card .alert { color: #1a0d12; }
 .login__foot { text-align: center; font-size: 12px; color: #93a6cc; border-top: 1px solid rgba(255, 255, 255, 0.12); padding-top: 14px; }
 @media (max-width: 920px) {
-  .login { place-items: start center; padding: 28px 16px 36px; }
-  .login__wrap { grid-template-columns: 1fr; gap: 26px; max-width: 440px; }
-  .login__brand { text-align: center; justify-items: center; gap: 12px; }
+  .login { place-items: start center; padding: calc(70vw - 150px) 16px 36px; }
+  .login__wrap { grid-template-columns: 1fr; gap: 26px; max-width: 440px; padding: 0; }
+  .login__brand { display: none; }
   .login__brand h2 { font-size: clamp(28px, 8vw, 38px); }
   .login__brand p, .login__feats, .login__route { display: none; }
-  .login__card { justify-self: center; margin-top: 56px; }
+  .login__card { justify-self: center; margin-top: 62px; }
 }
-@media (max-width: 920px) and (max-height: 700px) { .login__brand { display: none; } .login__card { margin-top: 62px; } }
-@media (prefers-reduced-motion: reduce) { .login__bg video { display: none; } .login__dot { animation: none; } }
+@media (prefers-reduced-motion: reduce) { .login__dot { animation: none; } }
 
 /* QR imprimible */
 .poster { display: grid; justify-items: center; gap: 16px; padding: 34px 28px; text-align: center; background: #fff; border-radius: 24px; border: 1px solid var(--line); box-shadow: var(--shadow-sm); max-width: 520px; margin-inline: auto; }
@@ -432,3 +446,5 @@ details.fold > div { padding: 4px 18px 18px; display: grid; gap: 14px; }
 .hr { height: 1px; background: var(--line); border: 0; margin: 4px 0; }
 .mini { font-size: 12.5px; color: var(--muted); }
 .kbd { font-variant-numeric: tabular-nums; font-weight: 700; }
+
+@media (max-width: 920px) { .pub { padding-top: calc(70vw - 140px); } }

@@ -1,7 +1,8 @@
-import bwipjs from 'bwip-js/node';
 import { headers } from 'next/headers';
 import { PrintNow } from '@/components/ui/Bits';
+import { PosterDownloads } from '@/components/panel/PosterDownloads';
 import { requirePageUser } from '@/lib/auth';
+import { buildPosterSvg, buildQrOnlySvg } from '@/lib/poster';
 
 export const metadata = { title: 'Código QR' };
 export const dynamic = 'force-dynamic';
@@ -18,8 +19,8 @@ async function publicUrl(): Promise<string> {
 export default async function QrPage() {
   await requirePageUser('settings.write');
   const url = await publicUrl();
-  const svg = bwipjs.toSVG({ bcid: 'qrcode', text: url, scale: 4, paddingwidth: 0, paddingheight: 0, eclevel: 'Q' } as Parameters<typeof bwipjs.toSVG>[0]);
-  const download = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
+  const posterSvg = buildPosterSvg(url);
+  const qrSvg = buildQrOnlySvg(url);
 
   return (
     <>
@@ -30,20 +31,13 @@ export default async function QrPage() {
         </div>
         <div className="page-head__actions">
           <PrintNow auto={false} label="Imprimir cartel" />
-          <a className="btn btn--ghost" href={download} download="fenix-point-qr.svg">Descargar QR (SVG)</a>
+          <PosterDownloads posterId="poster-art" qrSvg={qrSvg} />
         </div>
       </header>
 
-      <section className="poster" aria-label="Cartel con código QR">
-        <img className="poster__logo" src="/marca/logo-fenix-point.jpg" alt="Fénix Point" width={120} height={120} />
-        <h2>Registre su envío aquí</h2>
-        <p>Escanee con la cámara de su celular</p>
-        <div className="poster__qr" role="img" aria-label={`Código QR que abre ${url}`} dangerouslySetInnerHTML={{ __html: svg }} />
-        <p className="url">{url.replace(/^https?:\/\//, '')}</p>
-        <p style={{ fontSize: 13 }}>Llene sus datos, lleve su paquete al mostrador y reciba su folio.</p>
-      </section>
+      <section id="poster-art" className="poster-art" aria-label="Cartel con código QR" dangerouslySetInnerHTML={{ __html: posterSvg }} />
 
-      <p className="alert alert--warn no-print" style={{ maxWidth: 520, marginInline: 'auto' }}>
+      <p className="alert alert--warn no-print" style={{ maxWidth: 560, marginInline: 'auto' }}>
         <span>Este QR apunta a <b>{url}</b>. Si algún día cambia el nombre del proyecto o la dirección, los QR ya impresos dejarían de funcionar.</span>
       </p>
     </>

@@ -12,7 +12,7 @@ export default async function LoginPage() {
   if (isDbConfigured() && (await getCurrentUser())) redirect('/panel');
   return (
     <main className="login" id="contenido">
-      <HeroVideo />
+      <HeroVideo variant="login" />
 
       <div className="login__wrap">
         <section className="login__brand">

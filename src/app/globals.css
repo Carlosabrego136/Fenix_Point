@@ -299,19 +299,18 @@ details.fold[open] > summary::after { content: '–'; }
 details.fold > div { padding: 4px 18px 18px; display: grid; gap: 14px; }
 
 /* escena de fondo (video) */
-.hv { position: fixed; inset: 0; z-index: -1; overflow: hidden; background: #111 url('/marca/escena-final.jpg') center bottom / cover no-repeat; }
-.hv video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center bottom; }
+.login .hv { --first: url('/marca/login-inicio.jpg'); --last: url('/marca/login-final.jpg'); }
+.pub .hv { --first: url('/marca/pub-inicio.jpg'); --last: url('/marca/pub-final.jpg'); }
+.hv { position: fixed; inset: 0; z-index: -1; overflow: hidden; background: #111 var(--first) center bottom / cover no-repeat; }
+.hv--still { background-image: var(--last); }
+.hv video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center bottom; transform: translateZ(0); }
 .hv--still video { display: none; }
-.hv__shade { position: absolute; inset: 0; }
 .hv__veil { position: absolute; inset: 0; background: #040b1f; opacity: 0; transition: opacity 0.9s ease; pointer-events: none; }
 .hv__veil.on { opacity: 1; }
-.login .hv__shade { mix-blend-mode: multiply; background: linear-gradient(100deg, rgba(22, 58, 158, 0.94) 0%, rgba(30, 72, 178, 0.8) 50%, rgba(44, 96, 206, 0.5) 100%); }
-.pub .hv__shade { mix-blend-mode: multiply; background: linear-gradient(180deg, rgba(14, 42, 128, 0.93), rgba(10, 28, 90, 0.96)); }
 @media (max-width: 920px) {
-  .hv { position: absolute; inset: 0 0 auto 0; height: 70vw; background-position: 40% center; }
+  .login .hv, .pub .hv { --first: url('/marca/m-inicio.jpg'); --last: url('/marca/m-final.jpg'); position: absolute; inset: 0 0 auto 0; height: 70vw; background-position: 40% center; }
   .hv video { object-position: 40% center; }
   .hv::after { content: ''; position: absolute; inset: auto 0 0 0; height: 38%; background: linear-gradient(180deg, transparent, #050f2b); }
-  .login .hv__shade, .pub .hv__shade { background: rgba(40, 92, 200, 0.55); }
   .login .hv::after { background: linear-gradient(180deg, transparent, #040b1f); }
 }
 
